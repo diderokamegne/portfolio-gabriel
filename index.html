@@ -1233,35 +1233,119 @@
             </div>
 
             <div class="contact-grid">
-                <form class="contact-form reveal" id="contactForm">
-                    <div class="form-group">
-                        <label class="form-label">Nom complet</label>
-                        <input type="text" name="name" class="form-input" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-input" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Sujet</label>
-                        <input type="text" name="subject" class="form-input" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label class="form-label">Message</label>
-                        <textarea name="message" class="form-input form-textarea" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">
-                        <i class="fas fa-paper-plane"></i>
-                        Envoyer le message
-                    </button>
-                    
-                    <div id="formMessage" style="display: none; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center;"></div>
-                </form>
+               <form class="contact-form reveal" id="contactForm" 
+      action="https://formspree.io/f/xxxxxx" 
+      method="POST">
+      
+    <div class="form-group">
+        <label class="form-label">Nom complet</label>
+        <input type="text" name="name" class="form-input" required>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-input" required>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Sujet</label>
+        <input type="text" name="subject" class="form-input" required>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea name="message" class="form-input form-textarea" required></textarea>
+    </div>
+    
+    <!-- Champ caché pour éviter le spam (honeypot) -->
+    <input type="text" name="_gotcha" style="display:none">
 
+    <!-- Redirection après envoi -->
+    <input type="hidden" name="_next" value="https://ton-site.com/merci.html">
+
+    <button type="submit" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-paper-plane"></i>
+        Envoyer le message
+    </button>
+    
+    <div id="formMessage" style="display: none; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center;"></div>
+</form>
+              <!-- java-->
+
+              <form class="contact-form reveal" id="contactForm" 
+      action="https://formspree.io/f/xxxxxx" 
+      method="POST">
+      
+    <div class="form-group">
+        <label class="form-label">Nom complet</label>
+        <input type="text" name="name" class="form-input" required>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-input" required>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Sujet</label>
+        <input type="text" name="subject" class="form-input" required>
+    </div>
+    
+    <div class="form-group">
+        <label class="form-label">Message</label>
+        <textarea name="message" class="form-input form-textarea" required></textarea>
+    </div>
+    
+    <!-- Champ caché anti-spam -->
+    <input type="text" name="_gotcha" style="display:none">
+
+    <button type="submit" class="btn btn-primary" style="width: 100%;">
+        <i class="fas fa-paper-plane"></i>
+        Envoyer le message
+    </button>
+    
+    <div id="formMessage" style="display: none; padding: 1rem; border-radius: 10px; margin-top: 1rem; text-align: center;"></div>
+</form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("contactForm");
+    const formMessage = document.getElementById("formMessage");
+
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        // Affiche "envoi en cours..."
+        formMessage.style.display = "block";
+        formMessage.style.background = "#f0f0f0";
+        formMessage.style.color = "#333";
+        formMessage.textContent = "Envoi en cours...";
+
+        try {
+            let response = await fetch(form.action, {
+                method: form.method,
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                formMessage.style.background = "#d4edda";
+                formMessage.style.color = "#155724";
+                formMessage.textContent = "✅ Message envoyé avec succès !";
+                form.reset();
+            } else {
+                formMessage.style.background = "#f8d7da";
+                formMessage.style.color = "#721c24";
+                formMessage.textContent = "❌ Une erreur est survenue. Réessaie plus tard.";
+            }
+        } catch (error) {
+            formMessage.style.background = "#f8d7da";
+            formMessage.style.color = "#721c24";
+            formMessage.textContent = "⚠️ Erreur de connexion. Vérifie ta connexion internet.";
+        }
+    });
+});
+</script>
                 <div class="contact-info reveal">
                     <div class="contact-item">
                         <div class="contact-icon">
