@@ -1370,6 +1370,259 @@
     </footer>
 
     <script>
+
+     // JavaScript pour le formulaire de contact amélioré
+document.addEventListener(“DOMContentLoaded”, function() {
+const contactForm = document.getElementById(“contactForm”);
+const successMessage = document.getElementById(“successMessage”);
+const errorMessage = document.getElementById(“errorMessage”);
+
+```
+contactForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    // Cacher les messages précédents
+    successMessage.style.display = "none";
+    errorMessage.style.display = "none";
+
+    // Récupérer le bouton de soumission
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    // Afficher l'état de chargement
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+    submitBtn.disabled = true;
+
+    try {
+        // Envoyer le formulaire via Formspree
+        const response = await fetch(contactForm.action, {
+            method: contactForm.method,
+            body: new FormData(contactForm),
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            // Succès - afficher le message de confirmation
+            successMessage.style.display = "block";
+            successMessage.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                Message envoyé avec succès ! Je vous répondrai dans les 24h.
+            `;
+            
+            // Réinitialiser le formulaire
+            contactForm.reset();
+            
+            // Faire défiler vers le message de succès
+            successMessage.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+
+            // Cacher le message après 8 secondes
+            setTimeout(() => {
+                successMessage.style.display = "none";
+            }, 8000);
+
+        } else {
+            throw new Error('Erreur serveur');
+        }
+    } catch (error) {
+        // Erreur - afficher le message d'erreur
+        errorMessage.style.display = "block";
+        errorMessage.innerHTML = `
+            <i class="fas fa-exclamation-circle"></i>
+            Une erreur s'est produite. Veuillez réessayer ou me contacter directement à 
+            <a href="mailto:kenmoegabriel@gmail.com" style="color: white; text-decoration: underline;">
+                kenmoegabriel@gmail.com
+            </a>
+        `;
+        
+        // Faire défiler vers le message d'erreur
+        errorMessage.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+
+        // Cacher le message après 10 secondes
+        setTimeout(() => {
+            errorMessage.style.display = "none";
+        }, 10000);
+
+    } finally {
+        // Restaurer le bouton à son état normal
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
+
+// Validation en temps réel des champs
+const formInputs = contactForm.querySelectorAll('.form-input');
+
+formInputs.forEach(input => {
+    input.addEventListener('blur', function() {
+        validateField(this);
+    });
+
+    input.addEventListener('input', function() {
+        // Supprimer les styles d'erreur lors de la saisie
+        this.style.borderColor = '';
+        const errorMsg = this.parentNode.querySelector('.field-error');
+        if (errorMsg) {
+            errorMsg.remove();
+        }
+    });
+});
+
+// Fonction de validation des champs
+function validateField(field) {
+    const value = field.value.trim();
+    let isValid = true;
+    let errorMessage = '';
+
+    // Supprimer les anciens messages d'erreur
+    const existingError = field.parentNode.querySelector('.field-error');
+    if (existingError) {
+        existingError.remove();
+    }
+
+    // Validation selon le type de champ
+    switch (field.name) {
+        case 'name':
+            if (value.length < 2) {
+                isValid = false;
+                errorMessage = 'Le nom doit contenir au moins 2 caractères';
+            }
+            break;
+
+        case 'email':
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(value)) {
+                isValid = false;
+                errorMessage = 'Veuillez entrer une adresse email valide';
+            }
+            break;
+
+        case 'subject':
+            if (value.length < 3) {
+                isValid = false;
+                errorMessage = 'Le sujet doit contenir au moins 3 caractères';
+            }
+            break;
+
+        case 'message':
+            if (value.length < 10) {
+                isValid = false;
+                errorMessage = 'Le message doit contenir au moins 10 caractères';
+            }
+            break;
+    }
+
+    // Afficher l'erreur si le champ n'est pas valide
+    if (!isValid) {
+        field.style.borderColor = '#ef4444';
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error';
+        errorDiv.style.cssText = `
+            color: #ef4444;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        `;
+        errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${errorMessage}`;
+        
+        field.parentNode.appendChild(errorDiv);
+    } else {
+        field.style.borderColor = '#10b981';
+    }
+
+    return isValid;
+}
+
+// Validation complète du formulaire avant soumission
+function validateForm() {
+    let isFormValid = true;
+    
+    formInputs.forEach(input => {
+        if (input.hasAttribute('required')) {
+            const isFieldValid = validateField(input);
+            if (!isFieldValid) {
+                isFormValid = false;
+            }
+        }
+    });
+
+    return isFormValid;
+}
+
+// Ajouter un écouteur pour la validation avant soumission
+contactForm.addEventListener('submit', function(e) {
+    if (!validateForm()) {
+        e.preventDefault();
+        
+        // Afficher un message d'erreur général
+        errorMessage.style.display = "block";
+        errorMessage.innerHTML = `
+            <i class="fas fa-exclamation-circle"></i>
+            Veuillez corriger les erreurs dans le formulaire avant de l'envoyer.
+        `;
+        
+        setTimeout(() => {
+            errorMessage.style.display = "none";
+        }, 5000);
+    }
+});
+
+// Auto-resize pour le textarea
+const textarea = contactForm.querySelector('textarea');
+if (textarea) {
+    textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.max(140, this.scrollHeight) + 'px';
+    });
+}
+
+// Effet de focus amélioré pour les champs
+formInputs.forEach(input => {
+    input.addEventListener('focus', function() {
+        this.parentNode.querySelector('.form-label').style.color = 'var(--accent-blue)';
+    });
+
+    input.addEventListener('blur', function() {
+        this.parentNode.querySelector('.form-label').style.color = '';
+    });
+});
+```
+
+});
+
+// Fonction utilitaire pour afficher des notifications toast (optionnel)
+function showToast(message, type = ‘success’) {
+const toast = document.createElement(‘div’);
+toast.className = `toast toast-${type}`;
+toast.style.cssText = `position: fixed; top: 20px; right: 20px; padding: 1rem 1.5rem; background: ${type === 'success' ? '#10b981' : '#ef4444'}; color: white; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 9999; transform: translateX(400px); transition: transform 0.3s ease; max-width: 350px;`;
+toast.innerHTML = message;
+
+```
+document.body.appendChild(toast);
+
+// Animer l'entrée
+setTimeout(() => {
+    toast.style.transform = 'translateX(0)';
+}, 100);
+
+// Supprimer après 5 secondes
+setTimeout(() => {
+    toast.style.transform = 'translateX(400px)';
+    setTimeout(() => {
+        document.body.removeChild(toast);
+    }, 300);
+}, 5000);
+```
+
+}
         // Particles Animation
         class ParticleSystem {
             constructor(canvas) {
