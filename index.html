@@ -1386,42 +1386,7 @@
     </footer>
 
     <script>
-       // Correction pour la fermeture du menu mobile
-  document.addEventListener('click', (e) => {
-    const navMenu = document.getElementById('navMenu');
-    const mobileToggle = document.getElementById('mobileToggle');
-    const isMenuClick = navMenu.contains(e.target);
-    const isToggleClick = mobileToggle.contains(e.target);
-    
-    if (!isMenuClick && !isToggleClick && navMenu.classList.contains('active')) {
-      navMenu.classList.remove('active');
-      mobileToggle.classList.remove('active');
-    }
-  });
-
-  // Correction pour le changement de thème de la navbar
-  function toggleTheme() {
-    body.classList.toggle('light-theme');
-    const isLight = body.classList.contains('light-theme');
-    themeIcon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    
-    // Mise à jour de la navbar selon le thème
-    const navbar = document.getElementById('navbar');
-    if (isLight) {
-      navbar.style.background = 'rgba(248, 250, 252, 0.95)';
-    } else {
-      navbar.style.background = 'rgba(10, 14, 39, 0.8)';
-    }
-  }
-
-  // Chargement du thème avec correction pour la navbar
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    body.classList.add('light-theme');
-    themeIcon.className = 'fas fa-sun';
-    navbar.style.background = 'rgba(248, 250, 252, 0.95)';
-  }
+      
         // Particles Animation
         class ParticleSystem {
             constructor(canvas) {
