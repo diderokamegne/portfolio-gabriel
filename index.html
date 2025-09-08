@@ -164,6 +164,8 @@
             cursor: pointer;
         }
 
+     
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
@@ -1629,7 +1631,30 @@
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
         });
+// Mobile Navigation
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navMenu = document.getElementById('navMenu');
 
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            }
+        });
         // Add scroll progress indicator
         const scrollProgress = document.createElement('div');
         scrollProgress.style.cssText = `
