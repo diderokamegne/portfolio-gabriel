@@ -104,20 +104,33 @@
             justify-content: center;
             color: white;
         }
+.light-theme .nav-menu {
+      background: var(--primary-dark);
+    }
 
         .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 1rem;
-        }
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100vh;
+      background: var(--primary-dark);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      transition: left 0.3s ease;
+      z-index: 1000;
+    }
+  .nav-menu.active {
+      left: 0;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
 
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
+         .nav-menu.active {
+      left: 0;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
 
         .nav-link::after {
             content: '';
@@ -155,16 +168,19 @@
             transform: scale(1.1);
         }
 
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-     
+       .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    z-index: 1001;
+  }
+      @media (max-width: 968px) {
+    .mobile-menu-toggle {
+      display: block;
+    }
 
         /* Hero Section */
         .hero {
@@ -859,6 +875,11 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-blue);
         }
+      .light-theme .navbar {
+    background: rgba(248, 250, 252, 0.95);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
     </style>
 </head>
 <body>
@@ -1365,6 +1386,42 @@
     </footer>
 
     <script>
+       // Correction pour la fermeture du menu mobile
+  document.addEventListener('click', (e) => {
+    const navMenu = document.getElementById('navMenu');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const isMenuClick = navMenu.contains(e.target);
+    const isToggleClick = mobileToggle.contains(e.target);
+    
+    if (!isMenuClick && !isToggleClick && navMenu.classList.contains('active')) {
+      navMenu.classList.remove('active');
+      mobileToggle.classList.remove('active');
+    }
+  });
+
+  // Correction pour le changement de thème de la navbar
+  function toggleTheme() {
+    body.classList.toggle('light-theme');
+    const isLight = body.classList.contains('light-theme');
+    themeIcon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    
+    // Mise à jour de la navbar selon le thème
+    const navbar = document.getElementById('navbar');
+    if (isLight) {
+      navbar.style.background = 'rgba(248, 250, 252, 0.95)';
+    } else {
+      navbar.style.background = 'rgba(10, 14, 39, 0.8)';
+    }
+  }
+
+  // Chargement du thème avec correction pour la navbar
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'light') {
+    body.classList.add('light-theme');
+    themeIcon.className = 'fas fa-sun';
+    navbar.style.background = 'rgba(248, 250, 252, 0.95)';
+  }
         // Particles Animation
         class ParticleSystem {
             constructor(canvas) {
