@@ -142,24 +142,26 @@
             width: 100%;
         }
 
-          .theme-toggle {
-            background: var(--glass-bg);
-            border: 2px solid var(--glass-border);
-            color: var(--text-primary);
-            padding: 0.75rem;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 1500s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .theme-toggle:hover {
-            background: var(--accent-blue);
-            color: white;
-            transform: scale(1.1) rotate(10deg);
-            border-color: var(--accent-blue);
-        }
+        .theme-toggle {
+    background: var(--accent-blue); /* bouton déjà en bleu */
+    border: 2px solid var(--accent-blue);
+    color: white; /* texte blanc par défaut */
+    padding: 0.75rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle:hover {
+    background: var(--accent-blue); /* reste bleu */
+    color: white; /* reste blanc */
+    transform: scale(1.1) rotate(10deg); /* juste effet visuel */
+    border-color: var(--accent-blue);
+}
+
        .mobile-menu-toggle {
             display: none;
             background: var(--glass-bg);
