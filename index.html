@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -15,26 +15,32 @@
             --accent-blue: #3b82f6;
             --accent-green: #10b981;
             --accent-purple: #8b5cf6;
+            --accent-orange: #f59e0b;
             --text-primary: #ffffff;
             --text-secondary: #94a3b8;
             --text-muted: #64748b;
             --glass-bg: rgba(255, 255, 255, 0.05);
             --glass-border: rgba(255, 255, 255, 0.1);
+            --navbar-bg: rgba(10, 14, 39, 0.8);
             --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
             --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         .light-theme {
             --primary-dark: #f8fafc;
-            --secondary-dark: #f1f5f9;
+            --secondary-dark: #e2e8f0;
             --text-primary: #1e293b;
             --text-secondary: #475569;
             --text-muted: #64748b;
-            --glass-bg: rgba(255, 255, 255, 0.8);
-            --glass-border: rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(15, 23, 42, 0.15);
+            --navbar-bg: rgba(248, 250, 252, 0.95);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
         }
 
         * {
@@ -48,7 +54,8 @@
             background: var(--primary-dark);
             color: var(--text-primary);
             overflow-x: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.6;
         }
 
         /* Particles Background */
@@ -62,21 +69,22 @@
             opacity: 0.6;
         }
 
-        /* Navigation */
+        /* Navigation - Mode sombre et clair corrigé */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            padding: 0.1rem 0;
+            padding: 1rem 0;
             backdrop-filter: blur(20px);
-            background: rgba(10, 14, 39, 0.8);
+            background: var(--navbar-bg);
             border-bottom: 1px solid var(--glass-border);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -91,95 +99,123 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background: var(--gradient-1);
-            border-radius: 10px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+            box-shadow: var(--shadow-lg);
         }
 
         .nav-menu {
             display: flex;
             list-style: none;
-            gap: 1rem;
+            gap: 2rem;
         }
 
         .nav-link {
             color: var(--text-secondary);
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
         }
 
-        .nav-link::after {
+        .nav-link::before {
             content: '';
             position: absolute;
-            bottom: -5px;
-            left: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
             width: 0;
-            height: 2px;
-            background: var(--accent-blue);
+            height: 3px;
+            background: var(--gradient-1);
             transition: width 0.3s ease;
+            border-radius: 2px;
         }
 
         .nav-link:hover,
         .nav-link.active {
             color: var(--text-primary);
+            background: var(--glass-bg);
         }
 
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 80%;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .theme-toggle {
             background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
+            border: 2px solid var(--glass-border);
             color: var(--text-primary);
-            padding: 0.5rem;
-            border-radius: 10px;
+            padding: 0.75rem;
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .theme-toggle:hover {
-            background: var(--glass-border);
-            transform: scale(1.1);
+            background: var(--accent-blue);
+            color: white;
+            transform: scale(1.1) rotate(10deg);
+            border-color: var(--accent-blue);
         }
 
         .mobile-menu-toggle {
             display: none;
-            background: none;
-            border: none;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
             color: var(--text-primary);
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             cursor: pointer;
+            padding: 0.75rem;
+            border-radius: 12px;
+            transition: all 0.3s ease;
         }
 
-        /* Hero Section */
+        /* Hero Section - Mobile optimisé */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            padding: 0 2rem;
+            padding: 2rem;
+            background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
         }
 
         .hero-content {
-            max-width: 1200px;
+            max-width: 1400px;
             display: grid;
             grid-template-columns: 1.2fr 1fr;
             gap: 4rem;
             align-items: center;
+            width: 100%;
         }
 
         .hero-text {
@@ -187,66 +223,92 @@
         }
 
         .hero-greeting {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--accent-blue);
-            font-weight: 600;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.2s;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.4s;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            color: var(--accent-blue);
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 1.5rem;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.6s;
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .hero-description {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.4s;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            color: var(--accent-blue);
+            font-weight: 700;
             margin-bottom: 2rem;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 0.8s;
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.6s;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.8s;
         }
 
         .hero-cta {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 1s;
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 1s;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-            border-radius: 15px;
+            gap: 0.75rem;
+            padding: 1.2rem 2.5rem;
+            border-radius: 16px;
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             border: none;
-            font-size: 1rem;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
@@ -256,20 +318,21 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px) scale(1.02);
             box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
         }
 
         .btn-outline {
-            background: transparent;
+            background: var(--glass-bg);
             color: var(--text-primary);
             border: 2px solid var(--glass-border);
         }
 
         .btn-outline:hover {
-            background: var(--glass-bg);
+            background: var(--accent-blue);
+            color: white;
             border-color: var(--accent-blue);
-            transform: translateY(-3px);
+            transform: translateY(-4px) scale(1.02);
         }
 
         .hero-badges {
@@ -278,19 +341,27 @@
             flex-wrap: wrap;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 1s ease forwards 1.2s;
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 1.2s;
         }
 
         .badge {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 25px;
-            font-size: 0.9rem;
-            font-weight: 500;
+            border: 2px solid var(--glass-border);
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-blue);
+            background: var(--accent-blue);
+            color: white;
         }
 
         .hero-image {
@@ -301,15 +372,15 @@
         }
 
         .profile-image {
-            width: 350px;
-            height: 350px;
-            border-radius: 30px;
+            width: min(400px, 80vw);
+            height: min(400px, 80vw);
+            border-radius: 35px;
             object-fit: cover;
             box-shadow: var(--shadow-xl);
-            border: 3px solid var(--glass-border);
+            border: 4px solid var(--glass-border);
             opacity: 0;
             transform: scale(0.8);
-            animation: zoomIn 1s ease forwards 0.5s;
+            animation: zoomIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards 0.5s;
         }
 
         .floating-elements {
@@ -320,92 +391,96 @@
 
         .floating-element {
             position: absolute;
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             background: var(--gradient-2);
-            border-radius: 15px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             animation: float 6s ease-in-out infinite;
+            box-shadow: var(--shadow-lg);
         }
 
         .floating-element:nth-child(2) {
-            top: 20%;
-            right: -10%;
+            top: 15%;
+            right: -5%;
             background: var(--gradient-3);
             animation-delay: -2s;
         }
 
         .floating-element:nth-child(3) {
-            bottom: 20%;
-            left: -10%;
-            background: var(--gradient-1);
+            bottom: 15%;
+            left: -5%;
+            background: var(--gradient-4);
             animation-delay: -4s;
         }
 
         /* Sections */
         .section {
-            padding: 6rem 0;
+            padding: 8rem 0;
             position: relative;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
         }
 
         .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
             position: relative;
             display: inline-block;
+            color: var(--text-primary);
         }
 
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
+            width: 100px;
+            height: 5px;
             background: var(--gradient-1);
-            border-radius: 2px;
+            border-radius: 3px;
         }
 
         .section-subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: var(--text-secondary);
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto;
+            line-height: 1.7;
         }
 
-        /* Cards Grid */
+        /* Cards Grid - Responsive amélioré */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(350px, 100%), 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
         }
 
         .card {
             background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            transition: all 0.3s ease;
+            border: 2px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(20px);
         }
 
         .card::before {
@@ -414,15 +489,16 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
+            height: 5px;
             background: var(--gradient-1);
             transform: translateX(-100%);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.02);
             box-shadow: var(--shadow-xl);
+            border-color: var(--accent-blue);
         }
 
         .card:hover::before {
@@ -430,6 +506,112 @@
         }
 
         .card-icon {
+            width: 75px;
+            height: 75px;
+            background: var(--gradient-1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .card-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section améliorée */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            margin-top: 4rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .form-label {
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .form-input {
+            padding: 1.25rem 1.5rem;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 15px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            background: var(--glass-bg);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent-blue);
+        }
+
+        .contact-icon {
             width: 60px;
             height: 60px;
             background: var(--gradient-1);
@@ -439,231 +621,19 @@
             justify-content: center;
             color: white;
             font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-title {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .card-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            margin-top: 3rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 100%;
-            background: var(--gradient-1);
-            border-radius: 2px;
-        }
-
-        .timeline-item {
-            display: flex;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .timeline-item:nth-child(even) {
-            flex-direction: row-reverse;
-        }
-
-        .timeline-content {
-            flex: 1;
-            max-width: 45%;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            position: relative;
-        }
-
-        .timeline-content::before {
-            content: '';
-            position: absolute;
-            top: 30px;
-            width: 20px;
-            height: 20px;
-            background: var(--gradient-1);
-            border-radius: 50%;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-content::before {
-            right: -60px;
-        }
-
-        .timeline-item:nth-child(even) .timeline-content::before {
-            left: -60px;
-        }
-
-        .timeline-date {
-            font-size: 0.9rem;
-            color: var(--accent-blue);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .timeline-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Skills Grid */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .skill-card {
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
-        .skill-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .skill-icon {
-            font-size: 3rem;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-
-        .skill-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .skill-items {
-            list-style: none;
-            color: var(--text-secondary);
-        }
-
-        .skill-items li {
-            margin-bottom: 0.5rem;
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .skill-items li::before {
-            content: '•';
-            position: absolute;
-            left: 0;
-            color: var(--accent-blue);
-            font-weight: bold;
-        }
-
-        /* Contact Section */
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            margin-top: 3rem;
-        }
-
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-
-        .form-label {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .form-input {
-            padding: 1rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient-1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
         .contact-details h4 {
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-size: 1.1rem;
         }
 
         .contact-details p {
@@ -674,58 +644,132 @@
         .contact-details a {
             color: var(--accent-blue);
             text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .contact-details a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .skill-card {
+            background: var(--glass-bg);
+            border: 2px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent-blue);
+        }
+
+        .skill-icon {
+            font-size: 3.5rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover .skill-icon {
+            transform: scale(1.1);
+        }
+
+        .skill-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .skill-items {
+            list-style: none;
+            color: var(--text-secondary);
+            text-align: left;
+        }
+
+        .skill-items li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 2rem;
+            font-weight: 500;
+        }
+
+        .skill-items li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: var(--accent-blue);
+            font-size: 1.2rem;
         }
 
         /* Footer */
         .footer {
             background: var(--secondary-dark);
-            border-top: 1px solid var(--glass-border);
-            padding: 3rem 0 2rem;
+            border-top: 2px solid var(--glass-border);
+            padding: 4rem 0 2rem;
             text-align: center;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
         }
 
         .footer-section h3 {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             color: var(--text-primary);
+            font-weight: 800;
         }
 
         .footer-section p {
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
         }
 
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         .social-link {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border: 2px solid var(--glass-border);
+            border-radius: 15px;
             color: var(--text-primary);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .social-link:hover {
             background: var(--accent-blue);
             color: white;
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.1);
+            border-color: var(--accent-blue);
         }
 
         .footer-bottom {
@@ -750,15 +794,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(5deg); }
         }
 
         /* Scroll reveal animation */
         .reveal {
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s ease;
+            transform: translateY(60px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .reveal.active {
@@ -766,83 +810,73 @@
             transform: translateY(0);
         }
 
-        /* Responsive Design */
-        @media (max-width: 968px) {
-            .nav-menu {
-                position: fixed;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100vh;
-                background: var(--primary-dark);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 2rem;
-                transition: left 0.3s ease;
-            }
+        /* Progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--gradient-1);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
 
-            .nav-menu.active {
-                left: 0;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
+        /* Responsive Design - Mobile First */
+        @media (max-width: 1024px) {
             .hero-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 2rem;
+                gap: 3rem;
             }
-
-            .hero-title {
-                font-size: 2.5rem;
+            
+            .section {
+                padding: 6rem 0;
             }
-
-            .timeline::before {
-                left: 30px;
-            }
-
-            .timeline-item,
-            .timeline-item:nth-child(even) {
-                flex-direction: row;
-            }
-
-            .timeline-content {
-                max-width: calc(100% - 80px);
-                margin-left: 80px;
-            }
-
-            .timeline-content::before,
-            .timeline-item:nth-child(even) .timeline-content::before {
-                left: -60px;
-            }
-
+            
             .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 3rem;
             }
         }
 
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
+            .nav-container {
+                padding: 0 1rem;
             }
 
-            .section-title {
-                font-size: 2rem;
+            .logo {
+                font-size: 1.2rem;
             }
 
-            .cards-grid,
-            .skills-grid {
-                grid-template-columns: 1fr;
+            .logo-icon {
+                width: 35px;
+                height: 35px;
             }
+        }
+
+        /* Success/Error messages */
+        .message {
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: none;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--accent-green);
+            color: var(--accent-green);
+        }
+
+        .error-message {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid #ef4444;
+            color: #ef4444;
         }
 
         /* Custom scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 10px;
         }
 
         ::-webkit-scrollbar-track {
@@ -851,15 +885,40 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--gradient-1);
-            border-radius: 4px;
+            border-radius: 5px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
             background: var(--accent-blue);
         }
+
+        /* Améliorations pour l'accessibilité */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Mode haute contraste */
+        @media (prefers-contrast: high) {
+            :root {
+                --glass-bg: rgba(0, 0, 0, 0.9);
+                --glass-border: rgba(255, 255, 255, 0.8);
+            }
+            
+            .light-theme {
+                --glass-bg: rgba(255, 255, 255, 0.95);
+                --glass-border: rgba(0, 0, 0, 0.8);
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="scroll-progress"></div>
     <canvas class="particles-bg" id="particles"></canvas>
 
     <!-- Navigation -->
@@ -875,21 +934,20 @@
             <ul class="nav-menu" id="navMenu">
                 <li><a href="#hero" class="nav-link active">Accueil</a></li>
                 <li><a href="#about" class="nav-link">À propos</a></li>
-                <li><a href="#education" class="nav-link">Parcours</a></li>
                 <li><a href="#experience" class="nav-link">Expériences</a></li>
                 <li><a href="#skills" class="nav-link">Compétences</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-             <div class="hero-cta">
-                    <a href="Cv.pdf" download class="btn btn-outline">
-                        <i class="fas fa-envelope"></i>
-                    Télécharger mon CV
-                    </a>
-            <div style="display: flex; gap: 1rem; align-items: center;">
-                <button class="theme-toggle" id="themeToggle">
+            
+            <div class="nav-actions">
+                <a href="#" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">
+                    <i class="fas fa-download"></i>
+                    CV
+                </a>
+                <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
                     <i class="fas fa-moon" id="themeIcon"></i>
                 </button>
-                <button class="mobile-menu-toggle" id="mobileToggle">
+                <button class="mobile-menu-toggle" id="mobileToggle" aria-label="Menu mobile">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -900,27 +958,28 @@
     <section id="hero" class="hero">
         <div class="hero-content">
             <div class="hero-text">
-                <div class="hero-greeting">👋 Bonjour, je me nomme</div>
+                <div class="hero-greeting">
+                    👋 Bonjour, je me nomme
+                </div>
                 <h1 class="hero-title">Gabriel KENMOE DOMCHE</h1>
-                <p class="hero-subtitle">🎓Étudiant en management et gestion des PME</p>
+                <p class="hero-subtitle">🎓 Étudiant en management et gestion des PME</p>
                 <p class="hero-description">
                     Passionné par l'audit et le contrôle de gestion, je développe mes compétences en analyse financière 
                     et gestion organisationnelle. Mon objectif : devenir contrôleur de gestion et contribuer au développement 
-                    des entreprises.
+                    des entreprises avec rigueur et innovation.
                 </p>
                 <div class="hero-cta">
                     <a href="#contact" class="btn btn-primary">
                         <i class="fas fa-envelope"></i>
                         Me contacter
                     </a>
-                 
-                    <a href="Memoire gestion et management des PME 2.pdf" download class="btn btn-outline">
+                    <a href="#" class="btn btn-outline">
                         <i class="fas fa-download"></i>
-                        Télécharger mon memoire
+                        Télécharger mon mémoire
                     </a>
-                   <a href="Tableau de bord distribution alimentaire - Feuille 1.pdf" download class="btn btn-outline">
-                        <i class="fas fa-download"></i>
-                        Télécharger mes projets
+                    <a href="#" class="btn btn-outline">
+                        <i class="fas fa-project-diagram"></i>
+                        Mes projets
                     </a>
                 </div>
                 <div class="hero-badges">
@@ -936,10 +995,14 @@
                         <i class="fas fa-chart-line"></i>
                         Performance
                     </span>
+                    <span class="badge">
+                        <i class="fas fa-lightbulb"></i>
+                        Innovation
+                    </span>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="photo.jpg" 
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
                      alt="Gabriel KENMOE DOMCHE" class="profile-image">
                 <div class="floating-elements">
                     <div class="floating-element">
@@ -965,7 +1028,7 @@
                     Qui suis-je ?
                 </h2>
                 <p class="section-subtitle">
-                    Découvrez mon profil, mes valeurs et mes aspirations professionnelles.
+                    Découvrez mon profil, mes valeurs et mes aspirations professionnelles dans le domaine du contrôle de gestion.
                 </p>
             </div>
 
@@ -974,99 +1037,40 @@
                     <div class="card-icon">
                         <i class="fas fa-bullseye"></i>
                     </div>
-                    <h3 class="card-title">Mon Objectif :</h3>
+                    <h3 class="card-title">Mon Objectif Professionnel</h3>
                     <p class="card-description">
-                        Développer une expertise dans l'audit et le contrôle de gestion.<br> 
-                        Objectif métier : <strong> Contrôleur de gestion.</strong>
+                        Développer une expertise pointue dans l'audit et le contrôle de gestion pour devenir un 
+                        <strong>Contrôleur de gestion</strong> capable d'optimiser les performances organisationnelles 
+                        et d'accompagner les entreprises dans leur croissance.
                     </p>
                 </div>
 
                 <div class="card reveal">
-                    <div class="card-icon">
+                    <div class="card-icon" style="background: var(--gradient-2);">
                         <i class="fas fa-star"></i>
                     </div>
-                    <h3 class="card-title">Mes Valeurs :</h3>
+                    <h3 class="card-title">Mes Valeurs Fondamentales</h3>
                     <p class="card-description">
-                        <strong>Rigueur, intégrité, performance<br>
-                        Ampathique, persévérant.<br></strong>
-                        
+                        <strong>Rigueur, intégrité et performance</strong> guident chacune de mes actions. 
+                        Je cultive également l'empathie et la persévérance pour bâtir des relations de confiance 
+                        et atteindre l'excellence dans mes missions.
                     </p>
                 </div>
 
                 <div class="card reveal">
-                    <div class="card-icon">
+                    <div class="card-icon" style="background: var(--gradient-3);">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h3 class="card-title">Centres d'intérêts :</h3>
+                    <h3 class="card-title">Centres d'Intérêts</h3>
                     <p class="card-description">
-                        L'univers des jeux vidéos.<br>
-                        Footing et Roller.
-                        
+                        Passionné par l'univers des jeux vidéo qui développe ma réflexion stratégique. 
+                        J'aime aussi me ressourcer par le footing et le roller, activités qui renforcent 
+                        ma discipline et mon équilibre personnel.
                     </p>
-                </div>
-                </div>
-    </section>
-
-    <!-- Education Section 
-    <section id="education" class="section">
-        <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">
-                    <i class="fas fa-graduation-cap"></i>
-                    Parcours Académique
-                </h2>
-                <p class="section-subtitle">
-                    Mon évolution académique vers une expertise en gestion et management.
-                </p>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item reveal">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2018-2019</div>
-                        <h3 class="timeline-title">Baccalauréat Comptabilité Gestion</h3>
-                        <p class="timeline-description">
-                            Formation de base en comptabilité et gestion, <br>développement des fondamentaux 
-                            en analyse financière et gestion d'entreprise.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="timeline-item reveal">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2019-2020</div>
-                        <h3 class="timeline-title">Licence 1 Sciences Économiques de Gestion</h3>
-                        <p class="timeline-description">
-                            Approfondissement des connaissances en économie et gestion,<br> 
-                            initiation aux méthodes quantitatives et à l'analyse économique.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="timeline-item reveal">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2021-2023</div>
-                        <h3 class="timeline-title">Bachelor 1 et 2 - Assistant Marketing</h3>
-                        <p class="timeline-description">
-                            Spécialisation en marketing, acquisition de compétences en stratégies marketing et en développement commercial.<br> 
-                            Formation pratique et théorique.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="timeline-item reveal">
-                    <div class="timeline-content">
-                        <div class="timeline-date">2023-2025</div>
-                        <h3 class="timeline-title">Bachelor 3 - Gestion et Management des PME</h3>
-                        <p class="timeline-description">
-                            Spécialisation en gestion et management 
-                            des PME,<br> préparation au métier de contrôleur de gestion.
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
     <!-- Experience Section -->
     <section id="experience" class="section">
@@ -1077,7 +1081,7 @@
                     Expériences Professionnelles
                 </h2>
                 <p class="section-subtitle">
-                    Mon parcours professionnel en développement commercial, marketing et gestion.
+                    Mon parcours professionnel progressif en développement commercial, marketing et gestion d'entreprise.
                 </p>
             </div>
 
@@ -1088,33 +1092,39 @@
                     </div>
                     <h3 class="card-title">Stagiaire Chargé de Développement Commercial et Marketing</h3>
                     <p class="card-description">
-                        <strong>Février 2024 - Mai 2024</strong><br>
-                        Développement de la stratégie commerciale, analyse du marché, 
-                        mise en œuvre d'actions marketing ciblées, et participation à l'élaboration de campagnes promotionnelles.
-                    </p>
-                </div>
-                <div class="card reveal">
-                    <div class="card-icon">
-                        <i class="fas fa-cogs"></i>
-                    </div>
-                    <h3 class="card-title">Stagiaire Chargé de Gestion et de Management</h3>
-                    <p class="card-description">
-                        <strong>Janvier 2025 - Février 2025</strong><br>
-                        Analyse financière et élaboration d'un budget provisionnel.<br>
-                        Participation à la mise en place du projet organisationnel Optimax et à  
-                        l'optimisation des processus de gestion.
+                        <strong>Février 2024 - Mai 2024</strong><br><br>
+                        • Développement et mise en œuvre de stratégies commerciales ciblées<br>
+                        • Analyse approfondie du marché et identification d'opportunités<br>
+                        • Création et pilotage de campagnes marketing innovantes<br>
+                        • Optimisation des processus de vente et suivi des performances
                     </p>
                 </div>
 
                 <div class="card reveal">
-                    <div class="card-icon">
+                    <div class="card-icon" style="background: var(--gradient-2);">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="card-title">Stagiaire Chargé de Gestion et Management</h3>
+                    <p class="card-description">
+                        <strong>Janvier 2025 - Février 2025</strong><br><br>
+                        • Analyse financière complète et élaboration de budgets prévisionnels<br>
+                        • Participation au projet organisationnel "Optimax"<br>
+                        • Optimisation des processus de gestion et workflows<br>
+                        • Support à la prise de décision stratégique
+                    </p>
+                </div>
+
+                <div class="card reveal">
+                    <div class="card-icon" style="background: var(--gradient-3);">
                         <i class="fas fa-store"></i>
                     </div>
                     <h3 class="card-title">Équipier de Vente</h3>
                     <p class="card-description">
-                        <strong>Depuis Octobre 2024</strong><br>
-                        Expérience terrain en vente, relation clientèle, 
-                        et gestion des opérations commerciales quotidiennes.
+                        <strong>Depuis Octobre 2024</strong><br><br>
+                        • Excellence en relation client et conseil personnalisé<br>
+                        • Gestion autonome des opérations commerciales quotidiennes<br>
+                        • Contribution à l'atteinte des objectifs de vente<br>
+                        • Développement des soft skills en environnement dynamique
                     </p>
                 </div>
             </div>
@@ -1130,7 +1140,7 @@
                     Compétences Techniques
                 </h2>
                 <p class="section-subtitle">
-                    Mes expertises en analyse financière, gestion organisationnelle et outils techniques.
+                    Mes expertises développées en analyse financière, gestion organisationnelle et maîtrise d'outils techniques avancés.
                 </p>
             </div>
 
@@ -1142,8 +1152,9 @@
                     <h3 class="skill-name">Analyse Financière</h3>
                     <ul class="skill-items">
                         <li>Lecture et interprétation des états financiers</li>
-                        <li>Gestion des flux de trésorerie</li>
-                        <li>Analyse des ratios de gestion (SIG, CAF, BFR).</li>
+                        <li>Gestion optimisée des flux de trésorerie</li>
+                        <li>Analyse des ratios de gestion (SIG, CAF, BFR)</li>
+                        <li>Élaboration de budgets prévisionnels</li>
                     </ul>
                 </div>
 
@@ -1153,10 +1164,10 @@
                     </div>
                     <h3 class="skill-name">Gestion Organisationnelle</h3>
                     <ul class="skill-items">
-                        <li>Planification des tâches</li>
+                        <li>Planification stratégique des tâches</li>
                         <li>Optimisation des flux de travail</li>
-                        <li>Gestion de projet</li>
-                        <li>Leadership et gestion d'équipe.</li>
+                        <li>Gestion de projet et coordination d'équipes</li>
+                        <li>Leadership collaboratif et gestion du changement</li>
                     </ul>
                 </div>
 
@@ -1166,11 +1177,10 @@
                     </div>
                     <h3 class="skill-name">Outils Techniques</h3>
                     <ul class="skill-items">
-                        <li>Bonne maîtrise du pack Office <br>(Word, Excel)</li>
-                        <li>Bonne maîtrise des Apps Google <br>(Sheets, Form)</li>
-                        <li>Bonne maîtrise des outils de gestion <br> (Gantt Project, Monday)</li>
-                        <li>Bonne connaissance en HTML et CSS.</li>
-                      
+                        <li>Maîtrise avancée du pack Office (Word, Excel avancé)</li>
+                        <li>Expertise des Google Apps (Sheets, Forms, Analytics)</li>
+                        <li>Outils de gestion de projet (Gantt Project, Monday)</li>
+                        <li>Compétences en HTML/CSS et développement web</li>
                     </ul>
                 </div>
 
@@ -1180,204 +1190,227 @@
                     </div>
                     <h3 class="skill-name">Comptabilité & Finance</h3>
                     <ul class="skill-items">
-                        <li>Comptabilité générale</li>
-                        <li>Comptabilité analytique</li>
-                        <li>Analyse des coûts</li>
-                        <li>Gestion prévisionnelle.</li>
+                        <li>Comptabilité générale et analytique</li>
+                        <li>Analyse approfondie des coûts et rentabilité</li>
+                        <li>Gestion prévisionnelle et budgétaire</li>
+                        <li>Audit interne et contrôle de gestion</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Soft Skills -->
-            <div class="section-header reveal" style="margin-top: 4rem; margin-bottom: 2rem;">
-                <h3 class="section-title" style="font-size: 2rem;">
+            <div class="section-header reveal" style="margin-top: 6rem; margin-bottom: 3rem;">
+                <h3 class="section-title" style="font-size: 2.2rem;">
                     <i class="fas fa-user-friends"></i>
-                    Savoir-être
+                    Savoir-être & Qualités Personnelles
                 </h3>
             </div>
 
             <div class="cards-grid">
                 <div class="card reveal">
-                    <div class="card-icon">
+                    <div class="card-icon" style="background: var(--gradient-4);">
                         <i class="fas fa-sync-alt"></i>
                     </div>
-                    <h3 class="card-title">Adaptabilité</h3>
+                    <h3 class="card-title">Adaptabilité & Flexibilité</h3>
                     <p class="card-description">
-                        Capacité à s'adapter rapidement aux outils ERP et aux nouveaux environnements de travail.
+                        Capacité remarquable à s'adapter rapidement aux nouveaux outils ERP, 
+                        environnements de travail et évolutions technologiques. Apprentissage 
+                        autonome et intégration efficace dans diverses équipes.
                     </p>
                 </div>
 
                 <div class="card reveal">
-                    <div class="card-icon">
+                    <div class="card-icon" style="background: var(--gradient-2);">
                         <i class="fas fa-tasks"></i>
                     </div>
-                    <h3 class="card-title">Sens de l'organisation</h3>
+                    <h3 class="card-title">Sens de l'Organisation</h3>
                     <p class="card-description">
-                        Excellente organisation personnelle et capacité à structurer les tâches efficacement.
+                        Excellence organisationnelle avec une approche méthodique pour structurer 
+                        les tâches, prioriser les urgences et optimiser la productivité. 
+                        Respect rigoureux des délais et des procédures.
                     </p>
                 </div>
+
                 <div class="card reveal">
-                    <div class="card-icon">
+                    <div class="card-icon" style="background: var(--gradient-3);">
                         <i class="fas fa-users"></i>
                     </div>
-                    <h3 class="card-title">Esprit d'équipe</h3>
+                    <h3 class="card-title">Leadership Collaboratif</h3>
                     <p class="card-description">
-                        Facilité à travailler en équipe, communication efficace et collaboration constructive.
+                        Facilité naturelle pour le travail en équipe, communication efficace 
+                        et construction d'un environnement de collaboration positive. 
+                        Capacité à mobiliser et motiver les équipes vers des objectifs communs.
                     </p>
+                </div>
             </div>
         </div>
     </section>
 
-  
-<!-- Contact Section -->
-<section id="contact" class="section">
-    <div class="container">
-        <div class="section-header reveal">
-            <h2 class="section-title">Construisons Ensemble Votre Projet</h2>
-            <p class="section-subtitle">
-                Prêt à apporter mes compétences en contrôle de gestion à votre organisation. 
-                Contactez-moi pour discuter de vos besoins et opportunités.
-            </p>
-        </div>
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Construisons Ensemble Votre Projet</h2>
+                <p class="section-subtitle">
+                    Prêt à apporter mes compétences en contrôle de gestion à votre organisation. 
+                    Contactez-moi pour discuter de vos besoins et explorer les opportunités de collaboration.
+                </p>
+            </div>
 
-        <div class="contact-grid">
-            <form class="contact-form reveal" id="contactForm" 
-                  action="https://formspree.io/f/mwpnaqqp" 
-                  method="POST">
-                
-                <div class="form-group">
-                    <label class="form-label">Votre nom complet *</label>
-                    <input type="text" name="name" class="form-input" required 
-                           placeholder="Entrez votre nom et prénom">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Adresse email *</label>
-                    <input type="email" name="email" class="form-input" required 
-                           placeholder="votre.email@entreprise.com">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Objet de votre demande *</label>
-                    <input type="text" name="subject" class="form-input" required 
-                           placeholder="Stage, CDI, Mission, Autre...">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Votre message *</label>
-                    <textarea name="message" class="form-input form-textarea" required 
-                              placeholder="Décrivez votre projet, vos besoins, ou posez-moi vos questions..."></textarea>
-                </div>
-                
-                <input type="text" name="_gotcha" style="display:none">
-                <input type="hidden" name="_subject" value="Nouveau contact depuis le portfolio">
+            <div class="contact-grid">
+                <form class="contact-form reveal" id="contactForm" 
+                      action="https://formspree.io/f/mwpnaqqp" 
+                      method="POST">
+                    
+                    <div class="message success-message" id="successMessage">
+                        <i class="fas fa-check-circle"></i>
+                        Merci ! Votre message a été envoyé avec succès. Je vous répondrai dans les plus brefs délais.
+                    </div>
+                    
+                    <div class="message error-message" id="errorMessage">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Une erreur s'est produite. Veuillez réessayer ou me contacter directement par email.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Votre nom complet *</label>
+                        <input type="text" name="name" class="form-input" required 
+                               placeholder="Entrez votre nom et prénom">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Adresse email professionnelle *</label>
+                        <input type="email" name="email" class="form-input" required 
+                               placeholder="votre.email@entreprise.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Objet de votre demande *</label>
+                        <input type="text" name="subject" class="form-input" required 
+                               placeholder="Stage, CDI, Mission freelance, Collaboration...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Votre message détaillé *</label>
+                        <textarea name="message" class="form-input form-textarea" required 
+                                  placeholder="Décrivez votre projet, vos besoins spécifiques, le contexte de votre entreprise, ou posez-moi vos questions. Plus vous serez précis, mieux je pourrai vous répondre."></textarea>
+                    </div>
+                    
+                    <input type="text" name="_gotcha" style="display:none">
+                    <input type="hidden" name="_subject" value="Nouveau contact depuis le portfolio - Gabriel KENMOE">
 
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    <i class="fas fa-paper-plane"></i>
-                    Envoyer votre message
-                </button>
-                
-             
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">
+                        <i class="fas fa-paper-plane"></i>
+                        Envoyer votre message
+                    </button>
+                </form>
 
-            </form>
+                <div class="contact-info reveal">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email Professionnel</h4>
+                            <p><a href="mailto:kenmoegabriel@gmail.com">kenmoegabriel@gmail.com</a></p>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Réponse sous 24h</p>
+                        </div>
+                    </div>
 
-            <div class="contact-info reveal">
-                <div class="contact-item">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
+                    <div class="contact-item">
+                        <div class="contact-icon" style="background: var(--gradient-2);">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>WhatsApp Business</h4>
+                            <p><a href="https://wa.me/33753117460" target="_blank">+33 07 53 11 74 60</a></p>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Disponible 9h-18h</p>
+                        </div>
                     </div>
-                    <div class="contact-details">
-                        <h4>Email Professionnel</h4>
-                        <p><a href="mailto:kenmoegabriel@gmail.com">kenmoegabriel@gmail.com</a></p>
-                    </div>
-                </div>
 
-                <div class="contact-item">
-                    <div class="contact-icon" style="background: var(--gradient-2);">
-                        <i class="fab fa-whatsapp"></i>
+                    <div class="contact-item">
+                        <div class="contact-icon" style="background: var(--gradient-3);">
+                            <i class="fab fa-linkedin"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>LinkedIn Professionnel</h4>
+                            <p><a href="https://www.linkedin.com/in/gabriel-kenmoe-domche" target="_blank">Voir mon profil complet</a></p>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Réseau et actualités</p>
+                        </div>
                     </div>
-                    <div class="contact-details">
-                        <h4>WhatsApp</h4>
-                        <p><a href="https://wa.me/33753117460">+33 07 53 11 74 60</a></p>
-                    </div>
-                </div>
 
-                <div class="contact-item">
-                    <div class="contact-icon" style="background: var(--gradient-3);">
-                        <i class="fab fa-linkedin"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h4>LinkedIn Professionnel</h4>
-                        <p><a href="https://www.linkedin.com/in/gabriel-kenmoe-domche" target="_blank">Voir mon profil</a></p>
-                    </div>
-                </div>
-
-                <div class="contact-item">
-                    <div class="contact-icon" style="background: var(--gradient-4);">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="contact-details">
-                        <h4>Localisation</h4>
-                        <p>Région Pau, France<br>Mobile pour missions</p>
+                    <div class="contact-item">
+                        <div class="contact-icon" style="background: var(--gradient-4);">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Localisation & Mobilité</h4>
+                            <p>Région Pau, Nouvelle-Aquitaine</p>
+                            <p style="font-size: 0.9rem; margin-top: 0.5rem;">Mobile sur toute la France</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Gabriel KENMOE DOMCHE</h3>
-                    <p>Étudiant en management et gestion des PME, passionné par l'audit et le contrôle de gestion.</p>
+                    <p>
+                        Étudiant en management et gestion des PME, spécialisé en audit et contrôle de gestion. 
+                        Prêt à apporter innovation et expertise à votre organisation.
+                    </p>
                     <div class="social-links">
-                        <a href="mailto:kenmoegabriel@gmail.com" class="social-link">
+                        <a href="mailto:kenmoegabriel@gmail.com" class="social-link" aria-label="Email">
                             <i class="fas fa-envelope"></i>
                         </a>
-                        <a href="https://wa.me/33753117460" class="social-link">
+                        <a href="https://wa.me/33753117460" class="social-link" aria-label="WhatsApp">
                             <i class="fab fa-whatsapp"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/gabriel-kenmoe-domche" class="social-link">
+                        <a href="https://www.linkedin.com/in/gabriel-kenmoe-domche" class="social-link" aria-label="LinkedIn">
                             <i class="fab fa-linkedin"></i>
                         </a>
                     </div>
                 </div>
 
                 <div class="footer-section">
-                    <h3>Navigation</h3>
+                    <h3>Navigation Rapide</h3>
                     <p>
-                        <a href="#about" style="color: var(--text-secondary); text-decoration: none;">À propos</a><br>
-                        <a href="#education" style="color: var(--text-secondary); text-decoration: none;">Parcours</a><br>
-                        <a href="#experience" style="color: var(--text-secondary); text-decoration: none;">Expériences</a><br>
-                        <a href="#skills" style="color: var(--text-secondary); text-decoration: none;">Compétences</a>
+                        <a href="#about" style="color: var(--text-secondary); text-decoration: none; display: block; margin-bottom: 0.5rem;">À propos de moi</a>
+                        <a href="#experience" style="color: var(--text-secondary); text-decoration: none; display: block; margin-bottom: 0.5rem;">Mes expériences</a>
+                        <a href="#skills" style="color: var(--text-secondary); text-decoration: none; display: block; margin-bottom: 0.5rem;">Compétences techniques</a>
+                        <a href="#contact" style="color: var(--text-secondary); text-decoration: none; display: block;">Me contacter</a>
                     </p>
                 </div>
 
                 <div class="footer-section">
                     <h3>Objectif Professionnel</h3>
                     <p>
-                        <strong>Contrôleur de gestion</strong><br>
-                        Spécialisé en audit et contrôle de gestion, 
-                        avec une expertise en analyse financière et gestion organisationnelle.
+                        <strong style="color: var(--accent-blue);">Contrôleur de gestion</strong><br>
+                        Spécialisé en audit et contrôle de gestion, avec une expertise approfondie en analyse financière, 
+                        gestion organisationnelle et optimisation des performances d'entreprise.
                     </p>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Gabriel KENMOE DOMCHE. Tous droits réservés.</p>
+                <p>&copy; 2025 Gabriel KENMOE DOMCHE. Tous droits réservés. | Portfolio développé avec passion 🚀</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Particles Animation
+        // Enhanced Particle System with better performance
         class ParticleSystem {
             constructor(canvas) {
                 this.canvas = canvas;
                 this.ctx = canvas.getContext('2d');
                 this.particles = [];
+                this.mouse = { x: 0, y: 0 };
                 this.init();
             }
 
@@ -1385,26 +1418,36 @@
                 this.resize();
                 this.createParticles();
                 this.animate();
+                this.addEventListeners();
+            }
+
+            addEventListeners() {
                 window.addEventListener('resize', () => this.resize());
+                window.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
             }
 
             resize() {
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
+                this.createParticles();
             }
 
             createParticles() {
-                const particleCount = Math.floor((this.canvas.width * this.canvas.height) / 15000);
+                const particleCount = Math.floor((this.canvas.width * this.canvas.height) / 12000);
                 this.particles = [];
 
                 for (let i = 0; i < particleCount; i++) {
                     this.particles.push({
                         x: Math.random() * this.canvas.width,
                         y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        size: Math.random() * 2 + 1,
-                        opacity: Math.random() * 0.5 + 0.2
+                        vx: (Math.random() - 0.5) * 0.8,
+                        vy: (Math.random() - 0.5) * 0.8,
+                        size: Math.random() * 3 + 1,
+                        opacity: Math.random() * 0.6 + 0.2,
+                        color: ['#3b82f6', '#10b981', '#8b5cf6'][Math.floor(Math.random() * 3)]
                     });
                 }
             }
@@ -1413,6 +1456,16 @@
                 this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
                 this.particles.forEach((particle, index) => {
+                    // Mouse interaction
+                    const dx = this.mouse.x - particle.x;
+                    const dy = this.mouse.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        particle.vx += dx * 0.0001;
+                        particle.vy += dy * 0.0001;
+                    }
+
                     // Update position
                     particle.x += particle.vx;
                     particle.y += particle.vy;
@@ -1421,10 +1474,17 @@
                     if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
                     if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
 
-                    // Draw particle
+                    // Draw particle with gradient
+                    const gradient = this.ctx.createRadialGradient(
+                        particle.x, particle.y, 0,
+                        particle.x, particle.y, particle.size
+                    );
+                    gradient.addColorStop(0, `${particle.color}${Math.floor(particle.opacity * 255).toString(16).padStart(2, '0')}`);
+                    gradient.addColorStop(1, `${particle.color}00`);
+
                     this.ctx.beginPath();
                     this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                    this.ctx.fillStyle = `rgba(59, 130, 246, ${particle.opacity})`;
+                    this.ctx.fillStyle = gradient;
                     this.ctx.fill();
 
                     // Draw connections
@@ -1433,11 +1493,12 @@
                         const dy = particle.y - otherParticle.y;
                         const distance = Math.sqrt(dx * dx + dy * dy);
 
-                        if (distance < 100) {
+                        if (distance < 120) {
                             this.ctx.beginPath();
                             this.ctx.moveTo(particle.x, particle.y);
                             this.ctx.lineTo(otherParticle.x, otherParticle.y);
-                            this.ctx.strokeStyle = `rgba(59, 130, 246, ${0.1 * (1 - distance / 100)})`;
+                            this.ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 * (1 - distance / 120)})`;
+                            this.ctx.lineWidth = 1;
                             this.ctx.stroke();
                         }
                     });
@@ -1451,7 +1512,7 @@
         const particlesCanvas = document.getElementById('particles');
         new ParticleSystem(particlesCanvas);
 
-        // Theme Toggle
+        // Enhanced Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
         const body = document.body;
@@ -1461,6 +1522,9 @@
             const isLight = body.classList.contains('light-theme');
             themeIcon.className = isLight ? 'fas fa-sun' : 'fas fa-moon';
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            
+            // Smooth transition effect
+            body.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
         }
 
         // Load saved theme
@@ -1472,29 +1536,32 @@
 
         themeToggle.addEventListener('click', toggleTheme);
 
-        // Mobile Navigation
+        // Enhanced Mobile Navigation
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
 
         mobileToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
+            const isActive = navMenu.classList.contains('active');
+            mobileToggle.querySelector('i').className = isActive ? 'fas fa-times' : 'fas fa-bars';
         });
 
         // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
+                mobileToggle.querySelector('i').className = 'fas fa-bars';
             });
         });
 
-        // Smooth Scroll and Active Navigation
+        // Enhanced Smooth Scroll and Active Navigation
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('.nav-link');
 
         function updateActiveNav() {
             let current = '';
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
+                const sectionTop = section.offsetTop - 120;
                 if (scrollY >= sectionTop) {
                     current = section.getAttribute('id');
                 }
@@ -1508,18 +1575,43 @@
             });
         }
 
+        // Smooth scroll to sections
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetSection = document.getElementById(targetId);
+                
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
         window.addEventListener('scroll', updateActiveNav);
 
-        // Scroll Reveal Animation
+        // Enhanced Scroll Reveal Animation with Intersection Observer
         const observerOptions = {
             threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+            rootMargin: '0px 0px -80px 0px'
         };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
+                    // Add staggered animation for cards
+                    if (entry.target.closest('.cards-grid') || entry.target.closest('.skills-grid')) {
+                        const cards = entry.target.closest('.cards-grid, .skills-grid').querySelectorAll('.card, .skill-card');
+                        cards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add('active');
+                            }, index * 100);
+                        });
+                    }
                 }
             });
         }, observerOptions);
@@ -1528,137 +1620,399 @@
             observer.observe(el);
         });
 
-        // Navbar Background on Scroll
+        // Enhanced Navbar Background on Scroll
         const navbar = document.getElementById('navbar');
+        const scrollProgress = document.querySelector('.scroll-progress');
+
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(10, 14, 39, 0.95)';
+            const scrolled = window.scrollY;
+            
+            // Navbar background
+            if (scrolled > 50) {
+                navbar.style.background = body.classList.contains('light-theme') 
+                    ? 'rgba(248, 250, 252, 0.98)' 
+                    : 'rgba(10, 14, 39, 0.98)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.1)';
             } else {
-                navbar.style.background = 'rgba(10, 14, 39, 0.8)';
+                navbar.style.background = body.classList.contains('light-theme')
+                    ? 'rgba(248, 250, 252, 0.95)'
+                    : 'rgba(10, 14, 39, 0.8)';
+                navbar.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.05)';
             }
+
+            // Progress bar
+            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrolled / windowHeight) * 100;
+            scrollProgress.style.width = scrollPercentage + '%';
         });
-// Enhanced Contact Form
-    const contactForm = document.getElementById('contactForm');
-    const successMessage = document.getElementById('successMessage');
-    const errorMessage = document.getElementById('errorMessage');
 
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+        // Enhanced Contact Form with better validation
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
 
-        // Hide previous messages
-        successMessage.style.display = 'none';
-        errorMessage.style.display = 'none';
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-        // Show loading state
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
-        submitBtn.disabled = true;
+            // Hide previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
 
-        try {
-            const response = await fetch(contactForm.action, {
-                method: contactForm.method,
-                body: new FormData(contactForm),
-                headers: { 'Accept': 'application/json' }
-            });
+            // Form validation
+            const formData = new FormData(contactForm);
+            const name = formData.get('name').trim();
+            const email = formData.get('email').trim();
+            const subject = formData.get('subject').trim();
+            const message = formData.get('message').trim();
 
-            if (response.ok) {
-                successMessage.style.display = 'block';
-                contactForm.reset();
-                
-                // Scroll to success message
-                successMessage.scrollIntoView({ 
+            if (!name || !email || !subject || !message) {
+                errorMessage.textContent = 'Veuillez remplir tous les champs obligatoires.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                errorMessage.textContent = 'Veuillez entrer une adresse email valide.';
+                errorMessage.style.display = 'block';
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: contactForm.method,
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    successMessage.style.display = 'block';
+                    contactForm.reset();
+                    
+                    // Scroll to success message
+                    successMessage.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+
+                    // Add confetti effect
+                    createConfetti();
+                } else {
+                    throw new Error('Erreur réseau');
+                }
+            } catch (error) {
+                errorMessage.style.display = 'block';
+                errorMessage.scrollIntoView({ 
                     behavior: 'smooth', 
                     block: 'center' 
                 });
-            } else {
-                throw new Error('Erreur réseau');
+            } finally {
+                // Restore button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             }
-        } catch (error) {
-            errorMessage.style.display = 'block';
-            errorMessage.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-            });
-        } finally {
-            // Restore button
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-        }
-    });
+        });
 
-        // Typing Animation for Hero Title
-        function typeWriter(element, text, speed = 100) {
+        // Confetti effect for successful form submission
+        function createConfetti() {
+            const colors = ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    top: -10px;
+                    left: ${Math.random() * 100}%;
+                    width: 10px;
+                    height: 10px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    z-index: 9999;
+                    animation: confetti-fall ${Math.random() * 2 + 2}s ease-out forwards;
+                    border-radius: 50%;
+                `;
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        // Add confetti animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confetti-fall {
+                to {
+                    transform: translateY(100vh) rotate(720deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Enhanced Typing Animation for Hero Title
+        function typeWriter(element, text, speed = 80) {
             let i = 0;
             element.innerHTML = '';
+            element.style.borderRight = '3px solid var(--accent-blue)';
             
             function type() {
                 if (i < text.length) {
                     element.innerHTML += text.charAt(i);
                     i++;
                     setTimeout(type, speed);
+                } else {
+                    // Remove cursor after typing is complete
+                    setTimeout(() => {
+                        element.style.borderRight = 'none';
+                    }, 1000);
                 }
             }
             
             type();
         }
 
-        // Start typing animation when page loads
-        window.addEventListener('load', () => {
-            const heroTitle = document.querySelector('.hero-title');
-            const originalText = heroTitle.textContent;
-            setTimeout(() => {
-                typeWriter(heroTitle, originalText, 80);
-            }, 1500);
-        });
-
-        // Add parallax effect to hero section
+        // Enhanced parallax effects
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
-            const parallaxElements = document.querySelectorAll('.floating-element');
             
+            // Parallax for floating elements
+            const parallaxElements = document.querySelectorAll('.floating-element');
             parallaxElements.forEach((element, index) => {
-                const speed = (index + 1) * 0.5;
-                element.style.transform = `translateY(${scrolled * speed}px)`;
+                const speed = (index + 1) * 0.3;
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.05}deg)`;
+            });
+
+            // Parallax for hero content
+            const heroText = document.querySelector('.hero-text');
+            if (heroText) {
+                heroText.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Enhanced hover effects for interactive elements
+        document.querySelectorAll('.card, .skill-card, .contact-item').forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                element.style.transform = 'translateY(-15px) scale(1.02)';
+                element.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            });
+
+            element.addEventListener('mouseleave', () => {
+                element.style.transform = 'translateY(0) scale(1)';
             });
         });
 
-        // Add hover effects to cards
-        document.querySelectorAll('.card, .skill-card').forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px) scale(1.02)';
-            });
+        // Performance optimization: Throttle scroll events
+        function throttle(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
 
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-            });
-        });
+        // Apply throttling to scroll-heavy functions
+        const throttledScrollHandler = throttle(() => {
+            updateActiveNav();
+        }, 100);
 
-        // Add loading animation
+        window.addEventListener('scroll', throttledScrollHandler);
+
+        // Enhanced loading animation
         window.addEventListener('load', () => {
             document.body.classList.add('loaded');
+            
+            // Start typing animation after a delay
+            setTimeout(() => {
+                const heroTitle = document.querySelector('.hero-title');
+                if (heroTitle) {
+                    const originalText = heroTitle.textContent;
+                    typeWriter(heroTitle, originalText, 100);
+                }
+            }, 1800);
+
+            // Animate hero badges with stagger
+            setTimeout(() => {
+                const badges = document.querySelectorAll('.badge');
+                badges.forEach((badge, index) => {
+                    setTimeout(() => {
+                        badge.style.animation = `fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards`;
+                    }, index * 150);
+                });
+            }, 2500);
         });
 
-        // Add scroll progress indicator
-        const scrollProgress = document.createElement('div');
-        scrollProgress.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(90deg, #3b82f6, #10b981);
-            z-index: 1001;
-            transition: width 0.1s ease;
-        `;
-        document.body.appendChild(scrollProgress);
-
-        window.addEventListener('scroll', () => {
-            const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (window.scrollY / windowHeight) * 100;
-            scrollProgress.style.width = scrolled + '%';
+        // Add smooth transitions for theme switching
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        mediaQuery.addListener((e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    body.classList.remove('light-theme');
+                    themeIcon.className = 'fas fa-moon';
+                } else {
+                    body.classList.add('light-theme');
+                    themeIcon.className = 'fas fa-sun';
+                }
+            }
         });
 
+        // Keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                mobileToggle.querySelector('i').className = 'fas fa-bars';
+            }
+        });
+
+        // Focus management for accessibility
+        const focusableElements = document.querySelectorAll('a, button, input, textarea, select');
+        focusableElements.forEach(element => {
+            element.addEventListener('focus', () => {
+                element.style.outline = '3px solid var(--accent-blue)';
+                element.style.outlineOffset = '2px';
+            });
+            
+            element.addEventListener('blur', () => {
+                element.style.outline = 'none';
+            });
+        });
+
+        // Enhanced error handling
+        window.addEventListener('error', (e) => {
+            console.log('Une erreur s\'est produite:', e.error);
+        });
+
+        // Service Worker for offline functionality (optional)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                        console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                        console.log('SW registration failed: ', registrationError);
+                    });
+            });
+        }
     </script>
 </body>
-</html>
+</html> {
+                padding: 0 1.5rem;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100vw;
+                height: 100vh;
+                background: var(--navbar-bg);
+                backdrop-filter: blur(30px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-link {
+                font-size: 1.5rem;
+                padding: 1rem 2rem;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero {
+                padding: 1.5rem;
+                min-height: 100vh;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 3rem;
+            }
+
+            .hero-cta {
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .contact-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .floating-element {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .cards-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .card,
+            .skill-card {
+                padding: 2rem;
+            }
+
+            .navbar {
+                padding: 0.75rem 0;
+            }
+
+            .nav-container
