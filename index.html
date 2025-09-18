@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
- <style>
+    <style>
         :root {
             --primary-dark: #0a0e27;
             --secondary-dark: #1a1f3a;
@@ -70,21 +70,21 @@
         }
 
         /* Navigation - Mode sombre et clair corrigé */
+      
+        /* Navigation */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
-            padding: 1rem 0;
+            padding: 0.1rem 0;
             backdrop-filter: blur(20px);
-            background: var(--navbar-bg);
+            background: rgba(10, 14, 39, 0.8);
             border-bottom: 1px solid var(--glass-border);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
         }
-
         .nav-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -120,10 +120,22 @@
         }
 
         .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
+         position: fixed;
+                top: 0;
+                left: -100%;
+                width: 100vw;
+                height: 100vh;
+                background: var(--navbar-bg);
+                backdrop-filter: blur(30px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 3rem;
+                transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+        .nav-menu.active {
+                left: 0;
+            }
 
         .nav-link {
             color: var(--text-secondary);
@@ -188,14 +200,11 @@
 
         .mobile-menu-toggle {
             display: none;
-            background: var(--glass-bg);
-            border: 2px solid var(--glass-border);
+            background: none;
+            border: none;
             color: var(--text-primary);
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             cursor: pointer;
-            padding: 0.75rem;
-            border-radius: 12px;
-            transition: all 0.3s ease;
         }
 
         /* Hero Section - Mobile optimisé */
@@ -914,9 +923,7 @@
                 --glass-bg: rgba(255, 255, 255, 0.95);
                 --glass-border: rgba(0, 0, 0, 0.8);
             }
-        } 
-
-   
+        }
     </style>
 </head>
 <body>
@@ -942,7 +949,7 @@
             </ul>
             
             <div class="nav-actions">
-                <a href="Cv.pdf" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">
+                <a href="#" class="btn btn-outline" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">
                     <i class="fas fa-download"></i>
                     CV
                 </a>
@@ -975,11 +982,11 @@
                         <i class="fas fa-envelope"></i>
                         Me contacter
                     </a>
-                    <a href="Memoire gestion et management des PME 2.pdf" class="btn btn-outline">
+                    <a href="#" class="btn btn-outline">
                         <i class="fas fa-download"></i>
                         Télécharger mon mémoire
                     </a>
-                    <a href="Tableau de bord distribution alimentaire - Feuille 1.pdf" class="btn btn-outline">
+                    <a href="#" class="btn btn-outline">
                         <i class="fas fa-project-diagram"></i>
                         Mes projets
                     </a>
@@ -1004,7 +1011,7 @@
                 </div>
             </div>
             <div class="hero-image">
-                <img src="photo.jpg" 
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
                      alt="Gabriel KENMOE DOMCHE" class="profile-image">
                 <div class="floating-elements">
                     <div class="floating-element">
@@ -1908,4 +1915,6 @@
         }
     </script>
 </body>
-</html> 
+</html>
+
+            .nav-container
