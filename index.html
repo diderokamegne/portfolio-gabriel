@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -29,15 +29,12 @@
 
         .light-theme {
             --primary-dark: #f8fafc;
-            --secondary-dark: #e2e8f0;
+            --secondary-dark: #f1f5f9;
             --text-primary: #1e293b;
             --text-secondary: #475569;
             --text-muted: #64748b;
-            --glass-bg: rgba(255, 255, 255, 0.9);
-            --glass-border: rgba(15, 23, 42, 0.15);
-            --navbar-bg: rgba(248, 250, 252, 0.95);
-            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            --glass-bg: rgba(255, 255, 255, 0.8);
+            --glass-border: rgba(0, 0, 0, 0.1);
         }
 
         * {
@@ -78,6 +75,7 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
+
 
         .nav-container {
             max-width: 1200px;
@@ -252,26 +250,6 @@
             border: none;
             font-size: 1rem;
         }
-     .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn-primary {
-            background: var(--gradient-1);
-            color: white;
-            box-shadow: var(--shadow-lg);
-        }
 
         .btn-primary {
             background: var(--gradient-1);
@@ -280,20 +258,20 @@
         }
 
         .btn-primary:hover {
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-3px);
             box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
         }
 
-       .btn-outline {
-            background: var(--glass-bg);
+        .btn-outline {
+            background: transparent;
             color: var(--text-primary);
             border: 2px solid var(--glass-border);
         }
+
         .btn-outline:hover {
-            background: var(--accent-blue);
-            color: white;
+            background: var(--glass-bg);
             border-color: var(--accent-blue);
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-3px);
         }
 
         .hero-badges {
@@ -941,7 +919,7 @@
                     <a href="Memoire gestion et management des PME 2.pdf" download class="btn btn-outline">
                         <i class="fas fa-download"></i>
                         Télécharger mon memoire
-                    </a> 
+                    </a>
                    <a href="Tableau de bord distribution alimentaire - Feuille 1.pdf" download class="btn btn-outline">
                         <i class="fas fa-download"></i>
                         Télécharger mes projets
